@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
 
+
 interface Cheese {
   id: number;
   name: string;
@@ -94,7 +95,7 @@ const cheeses: Cheese[] = [
     description: "Similar to Brie but with a more intense flavor. This Normandy cheese becomes increasingly creamy as it ripens and is delicious when baked.",
     image: "🧀"
   },
-  {
+  /*{
     id: 9,
     name: "Feta",
     origin: "Greece",
@@ -103,40 +104,48 @@ const cheeses: Cheese[] = [
     flavor: "Tangy, salty, and refreshing",
     description: "A Greek staple made from sheep's milk or a blend of sheep and goat's milk. Stored in brine, it's perfect for salads and Mediterranean dishes.",
     image: "🧀"
-  }
+  }*/
 ];
 
 export default function CheeseDisplay() {
   const [selectedCheese, setSelectedCheese] = useState<Cheese | null>(null);
 
   return (
-    <div>
-      {/* Display Case Header */}
-      <div className="bg-gradient-to-b from-yellow-800 to-yellow-700 text-amber-50 p-8 rounded-t-lg border-8 border-yellow-900 shadow-2xl">
-        <h2 className="text-3xl text-center mb-2">Artisanal Cheese Display</h2>
-        <p className="text-center opacity-90">Click any cheese to learn more</p>
-      </div>
-
-      {/* Display Case */}
-      <div className="bg-gradient-to-b from-amber-100 to-yellow-100 p-8 rounded-b-lg border-x-8 border-b-8 border-yellow-900 shadow-2xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div
+      className="min-h-screen bg-no-repeat bg-center"
+      style={{
+        backgroundImage: "url('https://pngimg.com/uploads/refrigerator/refrigerator_PNG101546.png')",
+        backgroundSize: 'contain',
+        backgroundPosition: 'top center',
+        minWidth: '1200px',
+        minHeight: '1200px'
+      }}
+    >
+      {/* Sticky Notes */}
+      <div className="px-32 max-w-lg mx-auto" style={{ paddingTop: '450px', maxWidth: '350px', maxHeight: '100px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {cheeses.map((cheese) => (
-            <Card 
+            <div
               key={cheese.id}
               onClick={() => setSelectedCheese(cheese)}
-              className="hover:shadow-xl transition-all duration-300 hover:scale-105 bg-white border-4 border-yellow-700 hover:border-yellow-800"
+              className="note group hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-2xl border-2 border-transparent hover:border-yellow-700"
             >
-              <CardHeader className="text-center">
-                <div className="text-6xl mb-2">{cheese.image}</div>
-                <CardTitle className="text-yellow-900">{cheese.name}</CardTitle>
-                <CardDescription>
-                  {cheese.origin} • {cheese.type}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-sm text-gray-600">Click to learn more</p>
-              </CardContent>
-            </Card>
+              {/* OVERLAY */}
+              <div className="absolute inset-0 bg-white/70 group-hover:bg-white/85 transition-opacity duration-300 z-0"></div>
+
+              {/* TEXT CONTENT */}
+              <div className="relative z-10 h-full flex flex-col items-center justify-center text-center">
+                <div className="text-4xl mb-2 filter drop-shadow-sm">{cheese.image}</div>
+
+                <h3 className="text-yellow-900 font-bold text-lg leading-tight mb-1">
+                  {cheese.name}
+                </h3>
+
+                <p className="text-xs font-semibold text-yellow-800 uppercase tracking-wide">
+                  {cheese.origin}
+                </p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
